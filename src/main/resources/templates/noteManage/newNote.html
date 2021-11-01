@@ -1,0 +1,23 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>New note</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<form action="#" th:action="@{/note/new}" th:object="${note}" method="POST">
+    <label for="title">Title: </label>
+    <br/>
+    <input type="text" id="title" th:field="*{title}"/>
+    <br/>
+    <label for="content">Content: </label>
+    <br/>
+    <input type="text" id="content" th:field="*{content}"/>
+    <br/>
+    <input type="submit" value="Create" th:onclick="send()">
+</form>
+</body>
+</html>
