@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller()
@@ -28,11 +32,10 @@ public class NotesController {
 
 
     @PostMapping("/new")
-    public String newNoteSubmit(@ModelAttribute Note note, Model model) {
+    public ModelAndView newNoteSubmit(@ModelAttribute Note note, Model model) {
         model.getAttribute("note");
         noteRepository.save(note);
-        return "noteManage/newNote";
-        //TODO после создания новой записи, переходить на страницу с всеми заметками
+        return new ModelAndView("redirect:/note/all");
     }
 
 
@@ -46,7 +49,14 @@ public class NotesController {
 
     @GetMapping("/all")
     public String allNotes(Model model) {
-        //TODO получить все заметки для конкретного юзера
+        List<Note> allNotes = new ArrayList<>();
+        noteRepository.findAll().forEach(allNotes::add);
+
+        if (allNotes.isEmpty()) {
+            return "noteManage/youHaveNoNotes";
+        }
+
+        model.addAttribute( "allNotes", allNotes);
         return "noteManage/allAvailableNotes";
     }
 

@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>All notes</title>
 </head>
 <body>
+<table>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Date</th>
+    <tr th:each="note : ${allNotes}">
+        <td><span th:text="${note.getTitle()}"> </span></td>
+        <td><span th:text="${note.getContent()}"> </span></td>
+        <td><span th:text="${note.getUploadDate()}"> </span></td>
 
+    </tr>
+</table>
 </body>
 </html>
