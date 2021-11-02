@@ -1,9 +1,6 @@
 package com.fleckinger.noteapp.data.note;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,6 +12,8 @@ public class Note {
     private long id;
     private NoteStatus status;
     private String title;
+    @Lob
+    @Column(length = 8192)
     private String content;
     private LocalDateTime uploadDate;
 
