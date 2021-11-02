@@ -15,7 +15,7 @@
     <br/>
     <label for="content">Content: </label>
     <br/>
-    <input type="text" id="content" th:field="*{content}"/>
+    <textarea name="content" id="content" rows="4" cols="50" th:field="*{content}"></textarea>
     <br/>
     <input type="submit" value="Create" th:onclick="send()">
 </form>
