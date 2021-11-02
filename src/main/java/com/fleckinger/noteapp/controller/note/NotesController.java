@@ -40,10 +40,10 @@ public class NotesController {
 
 
     @GetMapping("/{id}")
-    public String getById(@RequestParam long id, Model model) {
-        Note note = noteRepository.findById(id).orElseThrow(); //TODO сделать выброс ошибки
-        //TODO если заметка найдена в базе, собрать ее и отправить на фронт
-        return "";
+    public String getById(@PathVariable long id, Model model) {
+        Note note = noteRepository.findById(id).orElseThrow(); //TODO если заметки нет - выбросить ошибку
+        model.addAttribute(note);
+        return "noteManage/singleNote";
     }
 
 
