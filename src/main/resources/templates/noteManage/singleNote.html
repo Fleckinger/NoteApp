@@ -1,0 +1,25 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Note</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Title</th>
+            <td> <span th:text="${note.getTitle()}"></span></td>
+        </tr>
+        <tr>
+        <th>Content</th>
+        <td> <span th:text="${note.getContent()}"></span></td>
+        </tr>
+        <tr>
+        <th>Changed</th>
+        <td> <span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"></span></td>
+        </tr>
+    </table>
+
+</body>
+</html>
