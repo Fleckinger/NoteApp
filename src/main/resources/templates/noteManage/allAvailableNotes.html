@@ -6,16 +6,23 @@
     <title>All notes</title>
 </head>
 <body>
-<table>
-    <th>Title</th>
-    <th>Content</th>
-    <th>Date</th>
-    <tr th:each="note : ${allNotes}">
-        <td><span th:text="${note.getTitle()}"> </span></td>
-        <td><span th:text="${note.getContent()}"> </span></td>
-        <td><span th:text="${note.getUploadDate()}"> </span></td>
 
+<table>
+    <tr th:each="note : ${allNotes}">
+        <th>Title</th>
+        <td><span th:text="${note.getTitle()}"> </span></td>
+    </tr>
+
+    <tr th:each="note : ${allNotes}">
+        <th>Content</th>
+        <td><span th:text="${note.getContent()}"> </span></td>
+    </tr>
+
+    <tr th:each="note : ${allNotes}">
+        <th>Changed</th>
+        <td><span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"> </span></td>
     </tr>
 </table>
+
 </body>
 </html>
