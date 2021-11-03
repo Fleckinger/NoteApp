@@ -7,15 +7,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     private String firstName;
     private String lastName;
     @Column(unique = true)
     private String email;
     private String password;
+    @Transient
+    private String passwordConfirm;
 
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
@@ -49,5 +51,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }
