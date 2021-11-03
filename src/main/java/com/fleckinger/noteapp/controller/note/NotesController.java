@@ -1,7 +1,7 @@
 package com.fleckinger.noteapp.controller.note;
 
-import com.fleckinger.noteapp.data.note.Note;
-import com.fleckinger.noteapp.data.note.NoteRepository;
+import com.fleckinger.noteapp.entity.note.Note;
+import com.fleckinger.noteapp.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

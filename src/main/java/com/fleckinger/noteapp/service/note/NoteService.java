@@ -1,6 +1,7 @@
-package com.fleckinger.noteapp.data.note;
+package com.fleckinger.noteapp.service.note;
 
-import com.fleckinger.noteapp.data.user.User;
+import com.fleckinger.noteapp.entity.note.Note;
+import com.fleckinger.noteapp.entity.user.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,6 +1,8 @@
-package com.fleckinger.noteapp.data.note;
+package com.fleckinger.noteapp.service.note;
 
-import com.fleckinger.noteapp.data.user.User;
+import com.fleckinger.noteapp.entity.note.Note;
+import com.fleckinger.noteapp.entity.user.User;
+import com.fleckinger.noteapp.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 

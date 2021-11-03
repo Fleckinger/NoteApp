@@ -1,5 +1,6 @@
-package com.fleckinger.noteapp.data.note;
+package com.fleckinger.noteapp.repository;
 
+import com.fleckinger.noteapp.entity.note.Note;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

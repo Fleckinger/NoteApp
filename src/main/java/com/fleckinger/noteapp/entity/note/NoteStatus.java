@@ -1,4 +1,4 @@
-package com.fleckinger.noteapp.data.note;
+package com.fleckinger.noteapp.entity.note;
 
 public enum NoteStatus {
     AVAILABLE, ARCHIVED, DELETED
