@@ -1,8 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Registration</title>
     <style type="text/css">
         body {
             background: #181a1b;
@@ -11,6 +12,23 @@
     </style>
 </head>
 <body>
-
+       <form action="#" th:action="@{/registration}" th:object="${user}" method="POST">
+           <label for="First name"> First name: </label>
+           <input type="text" id="First name" th:field="*{firstName}">
+           <br/>
+           <label for="Last name"> Last name: </label>
+           <input type="text" id="Last name" th:field="*{lastName}">
+           <br/>
+           <label for="Email"> Email: </label>
+           <input type="text" id="Email" th:field="*{email}">
+           <br/>
+           <label for="Password"> Password: </label>
+           <input type="password" id="Password" th:field="*{password}">
+           <br/>
+           <label for="Password confirm">Password confirm</label>
+           <input type="password" id="Password confirm" th:field="*{passwordConfirm}">
+           <br/>
+           <input type="submit" value="Register" th:onclick="send()">
+       </form>
 </body>
 </html>
