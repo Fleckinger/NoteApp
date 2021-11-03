@@ -4,24 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <title>All notes</title>
+    <style type="text/css">
+        body {
+            background: #181a1b;
+            color: #e8e6e3;
+        }
+    </style>
 </head>
 <body>
 
-<table>
-    <tr th:each="note : ${allNotes}">
+<table th:each="note : ${allNotes}">
+    <tr >
         <th>Title</th>
         <td><span th:text="${note.getTitle()}"> </span></td>
     </tr>
 
-    <tr th:each="note : ${allNotes}">
+    <tr>
         <th>Content</th>
         <td><span th:text="${note.getContent()}"> </span></td>
     </tr>
 
-    <tr th:each="note : ${allNotes}">
+    <tr>
         <th>Changed</th>
         <td><span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"> </span></td>
     </tr>
+    <br/>
 </table>
 
 </body>
