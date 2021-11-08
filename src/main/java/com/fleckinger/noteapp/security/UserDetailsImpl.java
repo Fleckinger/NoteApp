@@ -23,6 +23,10 @@ public class UserDetailsImpl implements UserDetails {
         return List.of(authority);
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -52,4 +56,5 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

@@ -1,5 +1,7 @@
 package com.fleckinger.noteapp.entity.note;
 
+import com.fleckinger.noteapp.entity.user.User;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -16,6 +18,8 @@ public class Note {
     @Column(length = 8192)
     private String content;
     private LocalDateTime uploadDate;
+    @ManyToOne
+    private User user;
 
 
     public Note() {
@@ -65,6 +69,14 @@ public class Note {
 
     public void setUploadDate(LocalDateTime uploadDate) {
         this.uploadDate = uploadDate;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
