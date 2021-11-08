@@ -1,7 +1,7 @@
 package com.fleckinger.noteapp.controller;
 
 import com.fleckinger.noteapp.entity.user.User;
-import com.fleckinger.noteapp.repository.UserRepository;
+import com.fleckinger.noteapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RegistrationController {
 
-    UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public RegistrationController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public RegistrationController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/registration")
@@ -35,7 +35,7 @@ public class RegistrationController {
             return new ModelAndView("registration");
         }
 
-        userRepository.save(user);
+        userService.register(user);
         return new ModelAndView("redirect:note/all");
     }
 }

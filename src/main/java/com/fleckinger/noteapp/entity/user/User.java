@@ -15,6 +15,7 @@ public class User {
     private String password;
     @Transient
     private String passwordConfirm;
+    private String role;
 
 
     public long getId() {
@@ -59,5 +60,14 @@ public class User {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
+    }
+
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }
