@@ -9,6 +9,7 @@
             background: #181a1b;
             color: #e8e6e3;
         }
+
         a {
             color: aqua;
         }
@@ -16,8 +17,11 @@
 </head>
 <body>
 
+<a href="/note/new">Create new note</a>
+<br/>
+
 <table th:each="note : ${allNotes}">
-    <tr >
+    <tr>
         <th>Title</th>
         <td><span th:text="${note.getTitle()}"> </span></td>
     </tr>
@@ -32,7 +36,17 @@
         <td><span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"> </span></td>
     </tr>
     <br/>
+
+    <input type="submit" value="archive" th:onclick="send()">
+    <input type="submit" value="edit" th:onclick="send()">
+
+
+    <form th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="post">
+        <button type="submit">delete</button>
+    </form >
+
 </table>
+
 
 </body>
 </html>

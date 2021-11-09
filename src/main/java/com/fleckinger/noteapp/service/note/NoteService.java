@@ -35,9 +35,13 @@ public class NoteService {
                 .orElseThrow(() -> new UsernameNotFoundException("Note not found"));
     }
 
-    public List<Note> getAll(long userId) {
+    public List<Note> getAllAvailable(long userId) {
 
-        return noteRepository.findAllByUserId(userId);
+        return noteRepository.findAllByUserIdAndStatus(userId, NoteStatus.AVAILABLE);
+    }
+
+    public List<Note> getAllArchived(long userId) {
+        return noteRepository.findAllByUserIdAndStatus(userId, NoteStatus.ARCHIVED);
     }
 
     public void update(Note note) {
