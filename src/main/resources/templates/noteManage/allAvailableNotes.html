@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>All notes</title>
@@ -21,6 +21,7 @@
 <br/>
 
 <table th:each="note : ${allNotes}">
+
     <tr>
         <th>Title</th>
         <td><span th:text="${note.getTitle()}"> </span></td>
@@ -35,18 +36,20 @@
         <th>Changed</th>
         <td><span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"> </span></td>
     </tr>
+
     <br/>
 
-    <input type="submit" value="archive" th:onclick="send()">
     <input type="submit" value="edit" th:onclick="send()">
 
+    <form th:action="@{/note/archived/{id}(id=${note.getId()})}" method="POST">
+        <button type="submit">archive</button>
+    </form>
 
-    <form th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="post">
+    <form th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
         <button type="submit">delete</button>
     </form >
 
 </table>
-
 
 </body>
 </html>

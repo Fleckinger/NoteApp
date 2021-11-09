@@ -17,7 +17,6 @@ import java.util.List;
 public class NoteService {
 
     private final NoteRepository noteRepository;
-
     private final UserDetailServiceImpl userDetailService;
 
     @Autowired
@@ -72,12 +71,6 @@ public class NoteService {
 
     public void delete(long id) {
         noteRepository.deleteById(id);
-    }
-
-    public void setDeleteStatus(long id) {
-        Note note = get(id);
-        note.setStatus(NoteStatus.DELETED);
-        save(note);
     }
 
     public void archive(long id) {

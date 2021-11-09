@@ -35,7 +35,4 @@ public class UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found"));
     }
 
-
-    //TODO возможно добавить проверку есть ли такой юзер в базе, чтобы не проверять это в каждом методе класса?
-
 }

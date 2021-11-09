@@ -29,6 +29,7 @@ public class RegistrationController {
     @PostMapping("/registration")
     public ModelAndView registrationSubmit(@ModelAttribute User user, Model model) {
         model.getAttribute("user");
+
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             model.addAttribute("passwordError", "Пароли не совпадают");
             //TODO не выводит надпись о несовпадении паролей

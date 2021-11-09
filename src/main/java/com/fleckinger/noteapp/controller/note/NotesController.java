@@ -19,19 +19,16 @@ public class NotesController {
 
     NoteService noteService;
 
-
     @Autowired
     public NotesController(NoteService noteService) {
         this.noteService = noteService;
     }
-
 
     @GetMapping("/new")
     public String newNoteForm(Model model) {
         model.addAttribute("note", new Note());
         return "noteManage/newNote";
     }
-
 
     @PostMapping("/new")
     public ModelAndView newNoteSubmit(@ModelAttribute Note note, Model model) {
@@ -43,21 +40,17 @@ public class NotesController {
         return new ModelAndView("redirect:/note/all");
     }
 
-
     @PostMapping("/delete/{id}")
     public String deleteNote(@PathVariable long id) {
         noteService.delete(id);
         return "redirect:/note/all";
     }
 
-
-    @GetMapping("/{id}") //TODO а нужно ли вообще давать доступ по конкретному id?
-    public String getById(@PathVariable long id, Model model) {
-        Note note = noteService.get(id); //TODO если заметки нет - выбросить ошибку
-        model.addAttribute(note);
-        return "noteManage/singleNote";
+    @PostMapping("/archive/{id}")
+    public String archiveNote(@PathVariable long id) {
+        noteService.archive(id);
+        return "redirect:/note/all";
     }
-
 
     @GetMapping("/all")
     public String allNotes(Model model) {
@@ -71,16 +64,11 @@ public class NotesController {
         return "noteManage/allAvailableNotes";
     }
 
-
-    @GetMapping("archived_notes")
-    //TODO изменить ридерект если нет архивных заметок, с  надписью что архив пуст
-    // и ссылкой на все доступные заметки
-    //TODO на страницу с архивными заметками добавить кнопки вытащить из архива, удалить
+    @GetMapping("archived")
     public String allArchivedNotes(Model model) {
         List<Note> allArchivedNotes = noteService.getAllArchived(noteService.getCurrentUserId());
         if (allArchivedNotes.isEmpty()) {
-            return "noteManage/youHaveNoNotes"; // или добавить страницу которая пишет что нет архивированных заметок
-            // или динамически менять страницу
+            return "noteManage/youHaveNoArchivedNotes";
         }
         model.addAttribute("allArchivedNotes", allArchivedNotes);
         return "noteManage/allArchivedNotes";
