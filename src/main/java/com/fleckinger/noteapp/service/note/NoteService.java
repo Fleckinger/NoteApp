@@ -76,4 +76,10 @@ public class NoteService {
         save(note);
     }
 
+    public void unarchive(long id) {
+        Note note = get(id);
+        note.setStatus(NoteStatus.AVAILABLE);
+        save(note);
+    }
+
 }

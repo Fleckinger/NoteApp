@@ -1,6 +1,7 @@
 package com.fleckinger.noteapp.controller.note;
 
 import com.fleckinger.noteapp.entity.note.Note;
+import com.fleckinger.noteapp.entity.note.NoteStatus;
 import com.fleckinger.noteapp.service.note.NoteService;
 import com.fleckinger.noteapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,15 +58,28 @@ public class NotesController {
     //TODO Заменить pathVariable на передачу id в теле запроса см. https://stackoverflow.com/questions/16258426/spring-mvc-hiding-url-parameters-on-get/16278367
     @PostMapping("/delete/{id}")
     public String deleteNote(@PathVariable long id) {
+        String redirectPath = "redirect:/note/all";
+
+        if (noteService.get(id).getStatus().equals(NoteStatus.ARCHIVED)) {
+            redirectPath = "redirect:/note/archived";
+        }
+
         noteService.delete(id);
-        return "redirect:/note/all";
+        return redirectPath;
     }
+
     //TODO проблема с доступом через pathvariable в том, что можно указать вручную любой id и сделать что угодно с любой заметкой
     //нужно добавить какую-то проверку что заметка принадлежит текущему юзеру, или переместить id в тело запроса, или даже в хедер, в котором пароли обычно идут
     @PostMapping("/archive/{id}")
     public String archiveNote(@PathVariable long id) {
         noteService.archive(id);
         return "redirect:/note/all";
+    }
+
+    @PostMapping("/unarchive/{id}")
+    public String unarchiveNote(@PathVariable long id) {
+        noteService.unarchive(id);
+        return "redirect:/note/archived";
     }
 
     @GetMapping("/all")

@@ -9,9 +9,19 @@
             background: #181a1b;
             color: #e8e6e3;
         }
+        a {
+            color: aqua;
+        }
     </style>
 </head>
 <body>
+
+<div>
+    <a href="/note/all">Return to all notes</a>
+</div>
+
+<br/>
+
 <table th:each="note : ${allArchivedNotes}">
     <tr>
         <th>Title</th>
@@ -28,7 +38,17 @@
         <td><span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"></span></td>
     </tr>
 
-    <! -- TODO добавить кнопки  edit unarchive delete  -->
+    <form th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
+        <button type="submit">edit</button>
+    </form>
+
+    <form th:action="@{/note/unarchive/{id}(id=${note.getId()})}" method="POST">
+        <button type="submit">unarchive</button>
+    </form>
+
+    <form th:action="@{/note/delete/{id}(id=${note.getId()})}" method="POST">
+        <button type="submit">delete</button>
+    </form>
 
 </table>
 </body>
