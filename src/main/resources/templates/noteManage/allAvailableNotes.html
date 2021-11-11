@@ -39,9 +39,11 @@
 
     <br/>
 
-    <input type="submit" value="edit" th:onclick="send()">
+    <form th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
+        <button type="submit">edit</button>
+    </form>
 
-    <form th:action="@{/note/archived/{id}(id=${note.getId()})}" method="POST">
+    <form th:action="@{/note/archive/{id}(id=${note.getId()})}" method="POST">
         <button type="submit">archive</button>
     </form>
 

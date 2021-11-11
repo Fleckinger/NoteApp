@@ -1,10 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+    <style>
+        body {
+            background: #181a1b;
+            color: #e8e6e3;
+        }
+    </style>
 </head>
+
 <body>
-$END$
+    <form action="#" th:action="@{/note/edit}" th:object="${note}" method="POST">
+
+        <label for="title">Title:</label>
+        <br/>
+        <input id="title" type="text" th:placeholder="${note.getTitle()}" th:field="*{title}">
+        <br/>
+
+        <label for="content">Content:</label>
+        <br/>
+        <textarea id="content" rows="4" cols="50" th:text="${note.getContent()}" th:field="*{content}"></textarea>
+        <br/>
+        <input type="hidden" th:value="${note.getId()}" th:field="*{id}">
+
+        <input type="submit" value="Save" th:onclick="send()">
+
+    </form>
 </body>
 </html>
