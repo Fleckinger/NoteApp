@@ -25,6 +25,7 @@
         <textarea id="content" rows="4" cols="50" th:text="${note.getContent()}" th:field="*{content}"></textarea>
         <br/>
         <input type="hidden" th:value="${note.getId()}" th:field="*{id}">
+        <input type="hidden" th:value="${note.getStatus()}" th:field="*{status}">
 
         <input type="submit" value="Save" th:onclick="send()">
 
