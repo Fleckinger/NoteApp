@@ -3,9 +3,7 @@ package com.fleckinger.noteapp.service.note;
 import com.fleckinger.noteapp.entity.note.Note;
 
 import com.fleckinger.noteapp.entity.note.NoteStatus;
-import com.fleckinger.noteapp.entity.user.User;
 import com.fleckinger.noteapp.repository.NoteRepository;
-import com.fleckinger.noteapp.security.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,12 +15,11 @@ import java.util.List;
 public class NoteService {
 
     private final NoteRepository noteRepository;
-    private final UserDetailServiceImpl userDetailService;
+
 
     @Autowired
-    public NoteService(NoteRepository noteRepository, UserDetailServiceImpl userDetailsService) {
+    public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
-        this.userDetailService = userDetailsService;
     }
 
     public void save(Note note) {
@@ -77,14 +74,6 @@ public class NoteService {
         Note note = get(id);
         note.setStatus(NoteStatus.ARCHIVED);
         save(note);
-    }
-
-    public long getCurrentUserId() {
-        return userDetailService.getCurrentAuthenticatedUser().getId();
-    }
-
-    public User getCurrentUser() {
-        return userDetailService.getCurrentAuthenticatedUser();
     }
 
 }

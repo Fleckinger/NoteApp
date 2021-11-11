@@ -2,6 +2,7 @@ package com.fleckinger.noteapp.service.user;
 
 import com.fleckinger.noteapp.entity.user.User;
 import com.fleckinger.noteapp.repository.UserRepository;
+import com.fleckinger.noteapp.security.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,11 +13,13 @@ public class UserService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailServiceImpl userDetailService;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, UserDetailServiceImpl userDetailService) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.userDetailService = userDetailService;
     }
 
     public void register(User user) {
@@ -33,6 +36,14 @@ public class UserService {
         return repository
                 .findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found"));
+    }
+
+    public long getCurrentUserId() {
+        return userDetailService.getCurrentAuthenticatedUser().getId();
+    }
+
+    public User getCurrentUser() {
+        return userDetailService.getCurrentAuthenticatedUser();
     }
 
 }
