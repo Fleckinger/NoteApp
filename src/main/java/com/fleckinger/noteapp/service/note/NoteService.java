@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -44,30 +43,9 @@ public class NoteService {
         noteRepository.save(note);
     }
 
-    public void update(long id, NoteStatus status, String content) {
-        Note note = get(id);
-        note.setStatus(status);
-        note.setContent(content);
-        note.setUploadDate(LocalDateTime.now());
-        noteRepository.save(note);
-    }
-
-    public void updateStatus(long id, NoteStatus status) {
-        Note note = get(id);
-        note.setStatus(status);
-        note.setUploadDate(LocalDateTime.now());
-        noteRepository.save(note);
-    }
-
-    public void updateContent(long id, String content) {
-        Note note = get(id);
-        note.setContent(content);
-        note.setUploadDate(LocalDateTime.now());
-        noteRepository.save(note);
-    }
-
     public void delete(long id) {
         noteRepository.deleteById(id);
+        //TODO переделать чтобы метод возвращал boolean? true если успешно удалилось, false если такой id не найден в базе
     }
 
     public void archive(long id) {

@@ -2,12 +2,16 @@ package com.fleckinger.noteapp.controller.note;
 
 import com.fleckinger.noteapp.entity.note.Note;
 import com.fleckinger.noteapp.entity.note.NoteStatus;
+import com.fleckinger.noteapp.entity.user.User;
 import com.fleckinger.noteapp.service.note.NoteService;
 import com.fleckinger.noteapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -15,6 +19,7 @@ import java.util.List;
 @Controller()
 @RequestMapping("/note")
 public class NotesController {
+
 
     NoteService noteService;
     UserService userService;
@@ -49,13 +54,15 @@ public class NotesController {
     public String editNoteSubmit(Note note) {
         //TODO через тег hidden я подтягиваю id заметки с фронта и она сохраняется, однако, через код страницы можно
         //вписать любой id и отредактировать любую заметку, даже которая не принадлежит юзеру
+        User currentUser = userService.getCurrentUser();
+        if (!noteService.get(note.getId()).getUser().equals(currentUser)) {
+            //TODO выбросить ошибку доступа
+        }
         note.setUser(userService.getCurrentUser());
         noteService.update(note);
         return "redirect:/note/all";
     }
 
-    //TODO переделать на deleteMapping?
-    //TODO Заменить pathVariable на передачу id в теле запроса см. https://stackoverflow.com/questions/16258426/spring-mvc-hiding-url-parameters-on-get/16278367
     @PostMapping("/delete/{id}")
     public String deleteNote(@PathVariable long id) {
         String redirectPath = "redirect:/note/all";
