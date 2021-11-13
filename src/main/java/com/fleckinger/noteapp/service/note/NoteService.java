@@ -1,9 +1,9 @@
 package com.fleckinger.noteapp.service.note;
 
+import com.fleckinger.noteapp.dao.NoteDao;
 import com.fleckinger.noteapp.entity.note.Note;
 
 import com.fleckinger.noteapp.entity.note.NoteStatus;
-import com.fleckinger.noteapp.repository.NoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -13,51 +13,50 @@ import java.util.List;
 @Service
 public class NoteService {
 
-    private final NoteRepository noteRepository;
+    private final NoteDao noteDao;
 
 
     @Autowired
-    public NoteService(NoteRepository noteRepository) {
-        this.noteRepository = noteRepository;
+    public NoteService(NoteDao noteDao) {
+        this.noteDao = noteDao;
     }
 
     public void save(Note note) {
-        noteRepository.save(note);
+        noteDao.save(note);
     }
 
     public Note get(long id) {
-        return noteRepository.findById(id)
+        return noteDao.get(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Note not found"));
     }
 
     public List<Note> getAllAvailable(long userId) {
 
-        return noteRepository.findAllByUserIdAndStatus(userId, NoteStatus.AVAILABLE);
+        return noteDao.getAllByUserIdAndStatus(userId, NoteStatus.AVAILABLE);
     }
 
     public List<Note> getAllArchived(long userId) {
-        return noteRepository.findAllByUserIdAndStatus(userId, NoteStatus.ARCHIVED);
+        return noteDao.getAllByUserIdAndStatus(userId, NoteStatus.ARCHIVED);
     }
 
     public void update(Note note) {
-        noteRepository.save(note);
+        noteDao.update(note);
     }
 
     public void delete(long id) {
-        noteRepository.deleteById(id);
-        //TODO переделать чтобы метод возвращал boolean? true если успешно удалилось, false если такой id не найден в базе
+        noteDao.delete(id);
     }
 
     public void archive(long id) {
         Note note = get(id);
         note.setStatus(NoteStatus.ARCHIVED);
-        save(note);
+        update(note);
     }
 
     public void unarchive(long id) {
         Note note = get(id);
         note.setStatus(NoteStatus.AVAILABLE);
-        save(note);
+        update(note);
     }
 
 }

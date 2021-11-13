@@ -20,7 +20,6 @@ import java.util.List;
 @RequestMapping("/note")
 public class NotesController {
 
-
     NoteService noteService;
     UserService userService;
 
@@ -38,7 +37,7 @@ public class NotesController {
 
     @PostMapping("/new")
     public String newNoteSubmit(Note note) {
-        note.setUser(userService.getCurrentUser());
+        note.setUserId(userService.getCurrentUser().getId());
         noteService.save(note);
         return "redirect:/note/all";
     }
@@ -55,10 +54,10 @@ public class NotesController {
         //TODO через тег hidden я подтягиваю id заметки с фронта и она сохраняется, однако, через код страницы можно
         //вписать любой id и отредактировать любую заметку, даже которая не принадлежит юзеру
         User currentUser = userService.getCurrentUser();
-        if (!noteService.get(note.getId()).getUser().equals(currentUser)) {
+        if (!noteService.get(note.getId()).getUserId().equals(currentUser.getId())) {
             //TODO выбросить ошибку доступа
         }
-        note.setUser(userService.getCurrentUser());
+        note.setUserId(userService.getCurrentUser().getId());
         noteService.update(note);
         return "redirect:/note/all";
     }

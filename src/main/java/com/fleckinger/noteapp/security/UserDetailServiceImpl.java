@@ -1,7 +1,7 @@
 package com.fleckinger.noteapp.security;
 
+import com.fleckinger.noteapp.dao.UserDao;
 import com.fleckinger.noteapp.entity.user.User;
-import com.fleckinger.noteapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,17 +14,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private UserDao userDao;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository
-                .findUserByEmail(email)
+        User user = userDao
+                .getUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + " not found"));
         return new UserDetailsImpl(user);
     }

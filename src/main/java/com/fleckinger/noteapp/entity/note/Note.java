@@ -1,25 +1,18 @@
 package com.fleckinger.noteapp.entity.note;
 
-import com.fleckinger.noteapp.entity.user.User;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
+
 public class Note {
     //TODO добавить валидацию полей
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long id;
     private NoteStatus status;
     private String title;
-    @Lob
-    @Column(length = 8192)
     private String content;
     private LocalDateTime uploadDate;
-    @ManyToOne
-    private User user;
+    private Long userId;
 
 
     public Note() {
@@ -75,12 +68,12 @@ public class Note {
         this.uploadDate = uploadDate;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
