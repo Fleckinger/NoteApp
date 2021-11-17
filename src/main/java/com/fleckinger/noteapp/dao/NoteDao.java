@@ -27,15 +27,15 @@ public class NoteDao implements Dao<Note> {
         ) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                resultSet.next();
-
-                note = new Note();
-                fillNote(note, resultSet);
+                if (resultSet.next()) {
+                    note = new Note();
+                    fillNote(note, resultSet);
+                }
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        return Optional.of(note);
+        return Optional.ofNullable(note);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class NoteDao implements Dao<Note> {
     public void update(Note note) {
         try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
              PreparedStatement statement = connection.prepareStatement(
-                         "UPDATE note " +
+                     "UPDATE note " +
                              "SET id = ?, status = ?, title = ?, content = ?, upload_date = ?, user_id = ? " +
                              "WHERE id = ?")
         ) {

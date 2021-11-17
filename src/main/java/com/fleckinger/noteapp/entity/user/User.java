@@ -10,7 +10,6 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String passwordConfirm;
     private String role;
 
 
@@ -52,14 +51,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
     }
 
     public String getRole() {

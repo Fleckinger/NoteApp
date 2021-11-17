@@ -1,4 +1,4 @@
-<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
@@ -12,20 +12,70 @@
         a {
             color: aqua;
         }
+        span {
+            color: red;
+        }
     </style>
+    <script type="text/javascript">
+        var password = document.getElementById("Password"),
+            passwordConfirm = document.getElementById("Password confirm");
+
+        function validatePassword() {
+            if (password.value !== passwordConfirm.value) {
+                passwordConfirm.setCustomValidity("Passwords don't match");
+            } else {
+                passwordConfirm.setCustomValidity('');
+            }
+        }
+
+        password.onchange = validatePassword;
+        passwordConfirm.onkeyup = validatePassword;
+    </script>
 </head>
 <body>
-<form action="#" th:action="@{/registration}" th:object="${user}" method="POST">
 
+<form th:action="@{/registration}" th:object="${userDto}" method="POST">
 
-    <div><label for="First name"> First name: <input type="text" id="First name" th:field="*{firstName}"> </label></div>
-    <div><label for="Last name"> Last name: <input type="text" id="Last name" th:field="*{lastName}"> </label></div>
-    <div><label for="Email"> Email: <input type="text" id="Email" th:field="*{email}"> </label></div>
-    <div><label for="Password"> Password: <input type="password" id="Password" th:field="*{password}"></label></div>
-    <div><label for="Password confirm">Password confirm<input type="password" id="Password confirm" th:field="*{passwordConfirm}"></label></div>
+    <div>
+        <label for="First name"> First name:</label>
+        <input type="text" id="First name" th:field="*{firstName}">
+        <span th:if="${#fields.hasErrors()}" th:errors="*{firstName}"></span>
+    </div>
+
+    <div>
+        <label for="Last name"> Last name:</label>
+        <input type="text" id="Last name" th:field="*{lastName}">
+        <span th:if="${#fields.hasErrors()}" th:errors="*{lastName}"></span>
+    </div>
+
+    <div>
+        <label for="Email"> Email:</label>
+        <input type="text" id="Email" th:field="*{email}">
+        <span th:if="${#fields.hasErrors()}" th:errors="*{email}"></span>
+    </div>
+
+    <div>
+        <label for="EmailConfirm"> Email confirm:</label>
+        <input type="text" id="EmailConfirm" th:field="*{emailConfirm}">
+        <span th:if="${#fields.hasErrors()}" th:errors="*{emailConfirm}"></span>
+    </div>
+
+    <div>
+        <label for="Password"> Password:</label>
+        <input type="password" id="Password" th:field="*{password}">
+        <span th:if="${#fields.hasErrors()}" th:errors="*{password}"></span>
+    </div>
+
+    <div>
+        <label for="PasswordConfirm"> Password confirm:</label>
+        <input type="password" id="PasswordConfirm" th:field="*{passwordConfirm}">
+        <span th:if="${#fields.hasErrors()}" th:errors="*{passwordConfirm}"></span>
+    </div>
 
     <div>Already have an account? <a href="/login">Sign in</a> </div>
+
     <input type="submit" value="Register" th:onclick="send()">
+
 </form>
 </body>
 </html>

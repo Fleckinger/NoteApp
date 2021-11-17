@@ -4,9 +4,10 @@ import com.fleckinger.noteapp.dao.UserDao;
 import com.fleckinger.noteapp.entity.user.User;
 import com.fleckinger.noteapp.security.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -23,19 +24,14 @@ public class UserService {
     }
 
     public void register(User user) {
-        if (user == null) {
-            throw new NullPointerException();
-        }
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
         userDao.save(user);
     }
 
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         return userDao
-                .getUserByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email: " + email + "not found"));
+                .getUserByEmail(email);
     }
 
     public long getCurrentUserId() {
@@ -44,6 +40,10 @@ public class UserService {
 
     public User getCurrentUser() {
         return userDetailService.getCurrentAuthenticatedUser();
+    }
+
+    public boolean userExists(String email) {
+        return findUserByEmail(email).isPresent();
     }
 
 }

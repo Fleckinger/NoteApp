@@ -25,21 +25,21 @@ public class UserDao implements Dao<User> {
         ) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
-                resultSet.next();
+                if (resultSet.next()) {
+                    user = new User();
 
-                user = new User();
-
-                user.setId(resultSet.getLong("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPassword(resultSet.getString("password"));
-                user.setRole(resultSet.getString("role"));
+                    user.setId(resultSet.getLong("id"));
+                    user.setFirstName(resultSet.getString("first_name"));
+                    user.setLastName(resultSet.getString("last_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setRole(resultSet.getString("role"));
+                }
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
     @Override
@@ -132,20 +132,20 @@ public class UserDao implements Dao<User> {
         ) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
-                resultSet.next();
-
-                user = new User();
-                user.setId(resultSet.getLong("id"));
-                user.setFirstName(resultSet.getString("first_name"));
-                user.setLastName(resultSet.getString("last_name"));
-                user.setEmail(resultSet.getString("email"));
-                user.setPassword(resultSet.getString("password"));
-                user.setRole(resultSet.getString("role"));
+                if (resultSet.next()) {
+                    user = new User();
+                    user.setId(resultSet.getLong("id"));
+                    user.setFirstName(resultSet.getString("first_name"));
+                    user.setLastName(resultSet.getString("last_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setRole(resultSet.getString("role"));
+                }
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-        return Optional.of(user);
+        return Optional.ofNullable(user);
     }
 
 }
