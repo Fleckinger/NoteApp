@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Edit</title>
@@ -13,22 +13,23 @@
 </head>
 
 <body>
-    <form action="#" th:action="@{/note/edit}" th:object="${note}" method="POST">
+<form action="#" th:action="@{/note/edit}" th:object="${note}" method="POST">
 
-        <label for="title">Title:</label>
-        <br/>
-        <input id="title" type="text" th:placeholder="${note.getTitle()}" th:field="*{title}">
-        <br/>
+    <label for="title">Title:</label>
+    <br/>
+    <input id="title" type="text" th:placeholder="${note.getTitle()}" th:field="*{title}">
+    <br/>
 
-        <label for="content">Content:</label>
-        <br/>
-        <textarea id="content" rows="4" cols="50" th:text="${note.getContent()}" th:field="*{content}"></textarea>
-        <br/>
-        <input type="hidden" th:value="${note.getId()}" th:field="*{id}">
-        <input type="hidden" th:value="${note.getStatus()}" th:field="*{status}">
+    <label for="content">Content:</label>
+    <br/>
+    <textarea id="content" rows="4" cols="50" th:text="${note.getContent()}" th:field="*{content}"></textarea>
+    <br/>
+    <input type="hidden" th:value="${note.getId()}" th:field="*{id}">
+    <input type="hidden" th:value="${note.getStatus()}" th:field="*{status}">
 
-        <input type="submit" value="Save" th:onclick="send()">
+    <input type="submit" value="Save" th:onclick="send()">
 
-    </form>
+</form>
 </body>
+
 </html>

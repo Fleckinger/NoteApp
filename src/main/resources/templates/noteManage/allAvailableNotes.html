@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>All notes</title>
@@ -15,6 +15,7 @@
         }
     </style>
 </head>
+
 <body>
 <a href="/logout">Log Out</a>
 
@@ -52,8 +53,9 @@
 
     <form th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
         <button type="submit">delete</button>
-    </form >
+    </form>
 
 </table>
 </body>
+
 </html>

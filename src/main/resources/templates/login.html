@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -9,11 +9,13 @@
             background: #181a1b;
             color: #e8e6e3;
         }
+
         a {
             color: aqua;
         }
     </style>
 </head>
+
 <body>
 
 <form th:action="@{/login}" method="POST">
@@ -22,15 +24,26 @@
         You have been logged out.
     </div>
 
-    <div><label for="email">Email: <input type="text" id="email" name="username"></label></div>
-    <div><label for="password">Password: <input type="password" id="password" name="password"></label></div>
+    <div>
+        <label for="email">Email:
+            <input type="text" id="email" name="username">
+        </label>
+    </div>
+    <div>
+        <label for="password">Password:
+            <input type="password" id="password" name="password">
+        </label>
+    </div>
 
     <div style="color: red" th:if="${param.error}">
         Invalid username or password.
     </div>
 
     <div>New user? <a href="/registration">Register here.</a> </div>
-    <div><input type="submit" value="Sign in"/></div>
+    <div>
+        <input type="submit" value="Sign in" />
+    </div>
 </form>
 </body>
+
 </html>

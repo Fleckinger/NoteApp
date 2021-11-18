@@ -1,6 +1,6 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Note</title>
@@ -11,21 +11,23 @@
         }
     </style>
 </head>
+
 <body>
-    <table>
-        <tr>
-            <th>Title</th>
-            <td> <span th:text="${note.getTitle()}"></span></td>
-        </tr>
-        <tr>
+<table>
+    <tr>
+        <th>Title</th>
+        <td> <span th:text="${note.getTitle()}"></span></td>
+    </tr>
+    <tr>
         <th>Content</th>
         <td> <span th:text="${note.getContent()}"></span></td>
-        </tr>
-        <tr>
+    </tr>
+    <tr>
         <th>Changed</th>
         <td> <span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"></span></td>
-        </tr>
-    </table>
+    </tr>
+</table>
 
 </body>
+
 </html>
