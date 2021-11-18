@@ -5,8 +5,6 @@ import java.util.Objects;
 
 
 public class Note {
-    //TODO добавить валидацию полей
-
     private long id;
     private NoteStatus status;
     private String title;
