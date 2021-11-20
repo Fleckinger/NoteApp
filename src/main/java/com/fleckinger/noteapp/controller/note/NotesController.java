@@ -45,6 +45,9 @@ public class NotesController {
     //TODO Заменить pathVariable на передачу id в теле запроса см. https://stackoverflow.com/questions/16258426/spring-mvc-hiding-url-parameters-on-get/16278367
     @GetMapping("/edit/{id}")
     public String editNoteForm(@PathVariable long id, Model model) {
+        if (!userHasAccessToNote(id)) {
+            return "errors/notFound";
+        }
         model.addAttribute("note", noteService.get(id));
         return "noteManage/editNote";
     }
@@ -53,10 +56,10 @@ public class NotesController {
     public String editNoteSubmit(Note note) {
         //TODO через тег hidden я подтягиваю id заметки с фронта и она сохраняется, однако, через код страницы можно
         //вписать любой id и отредактировать любую заметку, даже которая не принадлежит юзеру
-        User currentUser = userService.getCurrentUser();
-        if (!noteService.get(note.getId()).getUserId().equals(currentUser.getId())) {
-            //TODO выбросить ошибку доступа
+        if (!userHasAccessToNote(note.getId())) {
+            return "errors/notFound";
         }
+
         note.setUserId(userService.getCurrentUser().getId());
         noteService.update(note);
         return "redirect:/note/all";
@@ -64,8 +67,11 @@ public class NotesController {
 
     @PostMapping("/delete/{id}")
     public String deleteNote(@PathVariable long id) {
-        String redirectPath = "redirect:/note/all";
+        if (!userHasAccessToNote(id)) {
+            return "errors/notFound";
+        }
 
+        String redirectPath = "redirect:/note/all";
         if (noteService.get(id).getStatus().equals(NoteStatus.ARCHIVED)) {
             redirectPath = "redirect:/note/archived";
         }
@@ -74,16 +80,20 @@ public class NotesController {
         return redirectPath;
     }
 
-    //TODO проблема с доступом через pathvariable в том, что можно указать вручную любой id и сделать что угодно с любой заметкой
-    //нужно добавить какую-то проверку что заметка принадлежит текущему юзеру, или переместить id в тело запроса, или даже в хедер, в котором пароли обычно идут
     @PostMapping("/archive/{id}")
     public String archiveNote(@PathVariable long id) {
+        if (!userHasAccessToNote(id)) {
+            return "errors/notFound";
+        }
         noteService.archive(id);
         return "redirect:/note/all";
     }
 
     @PostMapping("/unarchive/{id}")
     public String unarchiveNote(@PathVariable long id) {
+        if (!userHasAccessToNote(id)) {
+            return "errors/notFound";
+        }
         noteService.unarchive(id);
         return "redirect:/note/archived";
     }
@@ -108,4 +118,13 @@ public class NotesController {
         model.addAttribute("allArchivedNotes", allArchivedNotes);
         return "noteManage/allArchivedNotes";
     }
+
+    private boolean userHasAccessToNote(long noteId) {
+        User currentUser = userService.getCurrentUser();
+        Note requestedNote = noteService.get(noteId);
+
+        return requestedNote.getUserId().equals(currentUser.getId());
+    }
+
+
 }
