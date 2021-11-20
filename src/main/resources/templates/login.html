@@ -24,16 +24,16 @@
         You have been logged out.
     </div>
 
-    <div>
+    <table>
         <label for="email">Email:
             <input type="text" id="email" name="username">
         </label>
-    </div>
-    <div>
+    </table>
+    <table>
         <label for="password">Password:
             <input type="password" id="password" name="password">
         </label>
-    </div>
+    </table>
 
     <div style="color: red" th:if="${param.error}">
         Invalid username or password.
