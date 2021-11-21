@@ -8,6 +8,8 @@
 </head>
 
 <body>
+<div th:replace="~{/fragments/header :: header}"></div>
+
 <form action="#" th:action="@{/note/edit}" th:object="${note}" method="POST">
 
     <label for="title">Title:</label>

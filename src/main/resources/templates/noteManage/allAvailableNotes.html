@@ -8,45 +8,29 @@
 </head>
 
 <body>
-<a href="/logout">Log out</a>
+<div th:replace="~{/fragments/header :: header}"></div>
 
-<a href="/note/new">Create new note</a>
+<ul class="notes">
+    <li class="singleNote" th:each="note : ${allNotes}">
+        <h2 th:text="${note.getTitle()}"></h2>
+        <div th:text="${note.getContent()}"> </div>
+        <p>Edited: <span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"></span> </p>
 
-<a href="/note/archived">Archived notes</a>
-<br/>
+        <div>
+            <form class="noteButton" th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
+                <button type="submit">edit</button>
+            </form>
 
-<table th:each="note : ${allNotes}">
+            <form class="noteButton" th:action="@{/note/archive/{id}(id=${note.getId()})}" method="POST">
+                <button type="submit">archive</button>
+            </form>
 
-    <tr>
-        <th>Title</th>
-        <td><span th:text="${note.getTitle()}"> </span></td>
-    </tr>
-
-    <tr>
-        <th>Content</th>
-        <td><span th:text="${note.getContent()}"> </span></td>
-    </tr>
-
-    <tr>
-        <th>Changed</th>
-        <td><span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"> </span></td>
-    </tr>
-
-    <br/>
-
-    <form th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
-        <button type="submit">edit</button>
-    </form>
-
-    <form th:action="@{/note/archive/{id}(id=${note.getId()})}" method="POST">
-        <button type="submit">archive</button>
-    </form>
-
-    <form th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
-        <button type="submit">delete</button>
-    </form>
-
-</table>
+            <form class="noteButton" th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
+                <button type="submit">delete</button>
+            </form>
+        </div>
+    </li>
+</ul>
 </body>
 
 </html>

@@ -42,7 +42,6 @@ public class NotesController {
         return "redirect:/note/all";
     }
 
-    //TODO Заменить pathVariable на передачу id в теле запроса см. https://stackoverflow.com/questions/16258426/spring-mvc-hiding-url-parameters-on-get/16278367
     @GetMapping("/edit/{id}")
     public String editNoteForm(@PathVariable long id, Model model) {
         if (!userHasAccessToNote(id)) {
@@ -54,8 +53,6 @@ public class NotesController {
 
     @PostMapping("/edit")
     public String editNoteSubmit(Note note) {
-        //TODO через тег hidden я подтягиваю id заметки с фронта и она сохраняется, однако, через код страницы можно
-        //вписать любой id и отредактировать любую заметку, даже которая не принадлежит юзеру
         if (!userHasAccessToNote(note.getId())) {
             return "errors/notFound";
         }

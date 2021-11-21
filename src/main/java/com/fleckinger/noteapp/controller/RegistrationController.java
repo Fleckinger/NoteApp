@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class RegistrationController {
@@ -25,9 +26,9 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String registrationForm(Model model) {
+    public String registrationForm(Model model, Principal principal) {
         model.addAttribute("userDto", new UserDto());
-        return "registration";
+        return principal == null ? "registration": "redirect:note/all";
     }
 
     @PostMapping("/registration")
