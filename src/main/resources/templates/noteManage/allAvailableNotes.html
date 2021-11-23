@@ -17,16 +17,16 @@
         <p>Edited: <span th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"></span> </p>
 
         <div>
-            <form class="noteButton" th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
-                <button type="submit">edit</button>
+            <form class="editNoteButton" th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
+                <button class="editNoteButton" type="submit">edit</button>
             </form>
 
-            <form class="noteButton" th:action="@{/note/archive/{id}(id=${note.getId()})}" method="POST">
-                <button type="submit">archive</button>
+            <form class="archiveNoteButton" th:action="@{/note/archive/{id}(id=${note.getId()})}" method="POST">
+                <button class="archiveNoteButton" type="submit">archive</button>
             </form>
 
-            <form class="noteButton" th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
-                <button type="submit">delete</button>
+            <form class="deleteNoteButton" th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
+                <button class="deleteNoteButton" type="submit">delete</button>
             </form>
         </div>
     </li>
