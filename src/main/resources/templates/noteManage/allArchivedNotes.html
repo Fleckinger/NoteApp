@@ -23,7 +23,7 @@
             </form>
 
             <form class="noteButton" th:action="@{/note/unarchive/{id}(id=${note.getId()})}" method="POST">
-                <button type="submit">archive</button>
+                <button type="submit">unarchive</button>
             </form>
 
             <form class="noteButton" th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
