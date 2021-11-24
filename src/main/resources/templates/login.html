@@ -4,42 +4,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link th:href="@{/css/loginStyle.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-
-<form th:action="@{/login}" method="POST">
-
-    <div th:if="${param.logout}">
-        You have been logged out.
+<div class="sidenav">
+    <div class="login-main-text">
+        <h2>Application<br> Login Page</h2>
+        <p>Login or register from here to access.</p>
     </div>
+</div>
 
-    <table>
-        <label for="email">Email:
-            <input type="text" id="email" name="username">
-        </label>
-    </table>
-    <table>
-        <label for="password">Password:
-            <input type="password" id="password" name="password">
-        </label>
-    </table>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+            <form class="loginForm" th:action="@{/login}" method="POST">
+                <div th:if="${param.logout}" style="width: 30%">
+                    You have been logged out.
+                </div>
+                <form th:action="@{/login}" method="POST">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" id="email" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="password" name="password" class="form-control">
+                        <span class="error" th:if="${param.error}">Invalid username or password.</span>
+                    </div>
 
-    <span class="error" th:if="${param.error}">
-        Invalid username or password.
-    </span>
+                    <button type="submit" class="btn btn-black">Login</button>
 
-    <div>New user? <a href="/registration">Register here.</a> </div>
-    <div>
-        <button class="accessButton" type="submit">
-            <span class="accessButton">
-                Sign in
-            </span>
-        </button>
-       <!-- <input class="accessButton" type="submit" value="Sign in" />-->
+                    <a href="/registration">
+                        <button type="button" class="btn btn-secondary">Register</button>
+                    </a>
+                </form>
+            </form>
+        </div>
     </div>
+</div>
 </form>
 </body>
-
 </html>
