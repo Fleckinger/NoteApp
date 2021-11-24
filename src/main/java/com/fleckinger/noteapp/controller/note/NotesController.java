@@ -8,10 +8,7 @@ import com.fleckinger.noteapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -106,7 +103,18 @@ public class NotesController {
         return "noteManage/allAvailableNotes";
     }
 
-    @GetMapping("archived")
+    @GetMapping("/search")
+    public String searchNote(@RequestParam(name = "keyword") String keyword, Model model) {
+        if (keyword.isBlank()) {
+            return "redirect:/note/all";
+        }
+        List<Note> searchResult = noteService.search(keyword);
+
+        model.addAttribute("allNotes", searchResult);
+        return "noteManage/allAvailableNotes";
+    }
+
+    @GetMapping("/archived")
     public String allArchivedNotes(Model model) {
         List<Note> allArchivedNotes = noteService.getAllArchived(userService.getCurrentUserId());
         if (allArchivedNotes.isEmpty()) {

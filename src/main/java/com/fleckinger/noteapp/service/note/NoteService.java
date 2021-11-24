@@ -39,6 +39,10 @@ public class NoteService {
         return noteDao.getAllByUserIdAndStatus(userId, NoteStatus.ARCHIVED);
     }
 
+    public List<Note> search(String keyword) {
+        return noteDao.search(keyword);
+    }
+
     public void update(Note note) {
         noteDao.update(note);
     }

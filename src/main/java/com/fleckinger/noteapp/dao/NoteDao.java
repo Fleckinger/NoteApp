@@ -103,6 +103,27 @@ public class NoteDao implements Dao<Note> {
         }
     }
 
+    public List<Note> search(String keywords) {
+        List<Note> notes = new ArrayList<>();
+        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+             PreparedStatement statement = connection.prepareStatement(
+                     "SELECT * FROM note WHERE title LIKE ? OR content LIKE ?")) {
+
+            statement.setString(1, "%" + keywords + "%");
+            statement.setString(2, "%" + keywords + "%");
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    Note note = new Note();
+                    fillNote(note, resultSet);
+                    notes.add(note);
+                }
+            }
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return notes;
+    }
 
     public List<Note> getAllByUserIdAndStatus(long id, NoteStatus status) {
         List<Note> notes = new ArrayList<>();
@@ -144,4 +165,6 @@ public class NoteDao implements Dao<Note> {
         statement.setObject(5, note.getUploadDate());
         statement.setLong(6, note.getUserId());
     }
+
+
 }

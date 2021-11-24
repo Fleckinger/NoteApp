@@ -10,6 +10,14 @@
 <body>
 <div th:replace="~{/fragments/header :: header}"></div>
 
+<form action="#" th:action="@{/note/search}" method="GET">
+    <input type="text" th:name="keyword">
+    <button class="searchSubmit" type="submit">
+        Search
+    </button>
+</form>
+
+
 <ul class="notes">
     <li class="singleNote" th:each="note : ${allNotes}">
         <h2 th:text="${note.getTitle()}"></h2>
