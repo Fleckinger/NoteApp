@@ -3,56 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link th:href="@{/css/loginStyle.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-<form th:action="@{/registration}" th:object="${userDto}" method="POST">
-
-    <div>
-        <label for="First name"> First name:</label>
-        <input type="text" id="First name" th:field="*{firstName}">
-        <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{firstName}"></span>
+<div class="sidenav">
+    <div class="login-main-text">
+        <h2>Note App<br> Registration Page</h2>
+        <p>Login or register from here to access.</p>
     </div>
+</div>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="register-form"> <!--TODO переделать на registration-->
+            <form th:action="@{/registration}" th:object="${userDto}" method="POST">
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" id="FirstName" class="form-control" th:field="*{firstName}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{firstName}"></span>
+                </div>
 
-    <div>
-        <label for="Last name"> Last name:</label>
-        <input type="text" id="Last name" th:field="*{lastName}">
-        <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{lastName}"></span>
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" id="lastName" class="form-control" th:field="*{lastName}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{lastName}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" id="email" class="form-control" th:field="*{email}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{email}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Email confirm</label>
+                    <input type="text" id="emailConfirm" class="form-control" th:field="*{emailConfirm}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{emailConfirm}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" class="form-control" th:field="*{password}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{password}"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Password confirm</label>
+                    <input type="password" id="passwordConfirm" class="form-control" th:field="*{passwordConfirm}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{passwordConfirm}"></span>
+                </div>
+                <div>Already have an account? <a href="/login">Sign in</a></div>
+                <button type="submit" class="btn btn-black">Sign up</button>
+            </form>
+        </div>
     </div>
+</div>
 
-    <div>
-        <label for="Email"> Email:</label>
-        <input type="text" id="Email" th:field="*{email}">
-        <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{email}"></span>
-    </div>
-
-    <div>
-        <label for="EmailConfirm"> Email confirm:</label>
-        <input type="text" id="EmailConfirm" th:field="*{emailConfirm}">
-        <span class="error"th:if="${#fields.hasErrors()}" th:errors="*{emailConfirm}"></span>
-    </div>
-
-    <div>
-        <label for="Password"> Password:</label>
-        <input type="password" id="Password" th:field="*{password}">
-        <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{password}"></span>
-    </div>
-
-    <div>
-        <label for="PasswordConfirm"> Password confirm:</label>
-        <input type="password" id="PasswordConfirm" th:field="*{passwordConfirm}">
-        <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{passwordConfirm}"></span>
-    </div>
-
-    <div>Already have an account? <a href="/login">Sign in</a> </div>
-
-    <button class="accessButton" type="submit">
-            <span class="accessButton">
-                Sign in
-            </span>
-    </button>
-
-</form>
 </body>
 </html>

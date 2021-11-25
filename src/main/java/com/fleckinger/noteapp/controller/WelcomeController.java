@@ -10,6 +10,6 @@ public class WelcomeController {
 
     @GetMapping("/")
     public String main(Principal principal) {
-        return principal == null ? "main": "redirect:note/all";
+        return principal == null ? "login": "redirect:note/all";
     }
 }
