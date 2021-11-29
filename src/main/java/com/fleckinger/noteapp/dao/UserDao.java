@@ -10,10 +10,18 @@ import java.util.Optional;
 
 @Component
 public class UserDao implements Dao<User> {
-
+    //TODO инжектить коннекшн автоматически из контейнера спринг, а не открывать в каждом методе свой
     private static final String URL = "jdbc:mysql://localhost:3306/note";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
+
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Optional<User> get(Long id) {

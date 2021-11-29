@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        CharacterEncodingFilter charFilter = new CharacterEncodingFilter();
+        charFilter.setEncoding("UTF-8");
+        charFilter.setForceEncoding(true);
+        http.addFilterBefore(charFilter, CsrfFilter.class);
+
         http
                 .csrf().disable()
                 .authorizeRequests()
@@ -39,7 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .httpBasic();
-
     }
 
     @Override

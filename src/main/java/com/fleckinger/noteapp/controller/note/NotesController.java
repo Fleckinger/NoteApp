@@ -103,6 +103,16 @@ public class NotesController {
         return "noteManage/allAvailableNotes";
     }
 
+    @GetMapping("/archived")
+    public String allArchivedNotes(Model model) {
+        List<Note> allArchivedNotes = noteService.getAllArchived(userService.getCurrentUserId());
+        if (allArchivedNotes.isEmpty()) {
+            return "noteManage/youHaveNoArchivedNotes";
+        }
+        model.addAttribute("allArchivedNotes", allArchivedNotes);
+        return "noteManage/allArchivedNotes";
+    }
+
     @GetMapping("/search")
     public String searchNote(@RequestParam(name = "keyword") String keyword, Model model) {
         if (keyword.isBlank()) {
@@ -112,16 +122,6 @@ public class NotesController {
 
         model.addAttribute("allNotes", searchResult);
         return "noteManage/allAvailableNotes";
-    }
-
-    @GetMapping("/archived")
-    public String allArchivedNotes(Model model) {
-        List<Note> allArchivedNotes = noteService.getAllArchived(userService.getCurrentUserId());
-        if (allArchivedNotes.isEmpty()) {
-            return "noteManage/youHaveNoArchivedNotes";
-        }
-        model.addAttribute("allArchivedNotes", allArchivedNotes);
-        return "noteManage/allArchivedNotes";
     }
 
     private boolean userHasAccessToNote(long noteId) {

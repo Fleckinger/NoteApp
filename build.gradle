@@ -1,27 +1,64 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.6'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    //id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'war'
+    id 'application'
 }
-
-group = 'com.fleckinger'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.6'
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.6'
-    implementation 'org.springframework.boot:spring-boot-starter-security:2.5.6'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'mysql:mysql-connector-java:8.0.25'
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.6'
-}
+                                    //***Spring***//
 
-test {
-    useJUnitPlatform()
+    // https://mvnrepository.com/artifact/org.springframework/spring-core
+    implementation group: 'org.springframework', name: 'spring-core', version: '5.3.12'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-beans
+    implementation group: 'org.springframework', name: 'spring-beans', version: '5.3.12'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-context
+    implementation group: 'org.springframework', name: 'spring-context', version: '5.3.12'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-web
+    implementation group: 'org.springframework', name: 'spring-web', version: '5.3.12'
+
+    // https://mvnrepository.com/artifact/org.springframework/spring-webmvc
+    implementation group: 'org.springframework', name: 'spring-webmvc', version: '5.3.12'
+
+                                    //***Spring security***//
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-core
+    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.3.12.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-web
+    implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.3.12.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.security/spring-security-config
+    implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.3.12.RELEASE'
+
+    // https://mvnrepository.com/artifact/javax.validation/validation-api
+    implementation group: 'javax.validation', name: 'validation-api', version: '2.0.1.Final'
+
+                                        //***MySQL***//
+
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
+
+                                    //***Thymeleaf and servlet***//
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+
+    // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf-spring5
+    implementation group: 'org.thymeleaf', name: 'thymeleaf-spring5', version: '3.0.12.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.thymeleaf/thymeleaf
+    implementation group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.12.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-java8time
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time', version: '3.0.4.RELEASE'
+
+
 }

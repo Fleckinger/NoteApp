@@ -1,13 +1,17 @@
 package com.fleckinger.noteapp;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.fleckinger.noteapp.config.WebAppInitializer;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication
+
+@ComponentScan(basePackages = "com.fleckinger.noteapp")
 public class NoteAppApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(NoteAppApplication.class, args);
+    public static void main(String[] args) throws ClassNotFoundException {
+        AnnotationConfigApplicationContext context =
+                new AnnotationConfigApplicationContext(WebAppInitializer.class);
+        context.register();
     }
 
 }

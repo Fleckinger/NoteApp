@@ -4,7 +4,7 @@ import java.util.Objects;
 
 
 public class User {
-
+    //TODO попробовать сделать роли ENUM сделать роль юзера и админа
     private long id;
     private String firstName;
     private String lastName;
