@@ -1,7 +1,10 @@
 package com.fleckinger.noteapp.dao;
 
+import com.fleckinger.noteapp.config.JdbcConfig;
+import com.fleckinger.noteapp.dao.Dao;
 import com.fleckinger.noteapp.entity.note.Note;
 import com.fleckinger.noteapp.entity.note.NoteStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -12,26 +15,14 @@ import java.util.Optional;
 
 @Component
 public class NoteDao implements Dao<Note> {
-    //TODO инжектить коннекшн автоматически из контейнера спринг, а не открывать в каждом методе свой
-    private static final String URL = "jdbc:mysql://localhost:3306/note";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
-
-    static {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
+    
+    private Connection connection;
+    
     @Override
     public Optional<Note> get(Long id) {
         Note note = null;
 
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement("SELECT * FROM note WHERE id = ?")
-
+        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM note WHERE id = ?")
         ) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -51,7 +42,6 @@ public class NoteDao implements Dao<Note> {
         List<Note> notes = new ArrayList<>();
 
         try (
-                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
                 PreparedStatement statement = connection.prepareStatement("SELECT * FROM note");
                 ResultSet resultSet = statement.executeQuery()
         ) {
@@ -69,9 +59,7 @@ public class NoteDao implements Dao<Note> {
 
     @Override
     public void save(Note note) {
-        try (
-                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO note VALUES (?, ?, ?, ?, ?, ?)")
+        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO note VALUES (?, ?, ?, ?, ?, ?)")
         ) {
             fillStatement(note, statement);
             statement.executeUpdate();
@@ -82,8 +70,7 @@ public class NoteDao implements Dao<Note> {
 
     @Override
     public void update(Note note) {
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(
+        try (PreparedStatement statement = connection.prepareStatement(
                      "UPDATE note " +
                              "SET id = ?, status = ?, title = ?, content = ?, upload_date = ?, user_id = ? " +
                              "WHERE id = ?")
@@ -99,9 +86,7 @@ public class NoteDao implements Dao<Note> {
 
     @Override
     public void delete(Long id) {
-        try (
-                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM note WHERE id = ?")
+        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM note WHERE id = ?")
         ) {
             statement.setLong(1, id);
             statement.executeUpdate();
@@ -113,8 +98,7 @@ public class NoteDao implements Dao<Note> {
 
     public List<Note> search(String keywords) {
         List<Note> notes = new ArrayList<>();
-        try (Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-             PreparedStatement statement = connection.prepareStatement(
+        try (PreparedStatement statement = connection.prepareStatement(
                      "SELECT * FROM note WHERE title LIKE ? OR content LIKE ?")) {
 
             statement.setString(1, "%" + keywords + "%");
@@ -136,9 +120,7 @@ public class NoteDao implements Dao<Note> {
     public List<Note> getAllByUserIdAndStatus(long id, NoteStatus status) {
         List<Note> notes = new ArrayList<>();
 
-        try (
-                Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-                PreparedStatement statement = connection.prepareStatement
+        try (PreparedStatement statement = connection.prepareStatement
                         ("SELECT * FROM note WHERE user_id = ? AND status = ?")
         ) {
             statement.setLong(1, id);
@@ -174,5 +156,8 @@ public class NoteDao implements Dao<Note> {
         statement.setLong(6, note.getUserId());
     }
 
-
+    @Autowired
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 }

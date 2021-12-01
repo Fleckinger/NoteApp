@@ -1,6 +1,5 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
@@ -17,7 +16,6 @@
         <p>Login or register from here to access.</p>
     </div>
 </div>
-
 <div class="main">
     <div class="col-md-6 col-sm-12">
         <div class="login-form">
@@ -35,9 +33,7 @@
                         <input type="password" id="password" name="password" class="form-control">
                         <span class="error" th:if="${param.error}">Invalid username or password.</span>
                     </div>
-
                     <button type="submit" class="btn btn-black">Login</button>
-
                     <a href="/registration">
                         <button type="button" class="btn btn-secondary">Register</button>
                     </a>
