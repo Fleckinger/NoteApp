@@ -17,8 +17,8 @@ import java.util.List;
 @RequestMapping("/note")
 public class NotesController {
 
-    NoteService noteService;
-    UserService userService;
+    private final NoteService noteService;
+    private final UserService userService;
 
     @Autowired
     public NotesController(NoteService noteService, UserService userService) {
@@ -96,10 +96,12 @@ public class NotesController {
     public String allNotes(Model model) {
         List<Note> allNotes = noteService.getAllAvailable(userService.getCurrentUserId());
         if (allNotes.isEmpty()) {
-            return "noteManage/youHaveNoNotes";
+            return "noteManage/youHaveNoNotes"; //TODO а может проверять пустоту массива уже таймлифом? и если он пуст, просто выводить надпись
         }
 
         model.addAttribute("allNotes", allNotes);
+        model.addAttribute("username", userService.getCurrentUser().getFirstName()
+                + " " + userService.getCurrentUser().getLastName());
         return "noteManage/allAvailableNotes";
     }
 
@@ -107,7 +109,7 @@ public class NotesController {
     public String allArchivedNotes(Model model) {
         List<Note> allArchivedNotes = noteService.getAllArchived(userService.getCurrentUserId());
         if (allArchivedNotes.isEmpty()) {
-            return "noteManage/youHaveNoArchivedNotes";
+            return "noteManage/youHaveNoArchivedNotes"; //TODO а может проверять пустоту массива уже таймлифом? и если он пуст, просто выводить надпись
         }
         model.addAttribute("allArchivedNotes", allArchivedNotes);
         return "noteManage/allArchivedNotes";

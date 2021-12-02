@@ -21,7 +21,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
