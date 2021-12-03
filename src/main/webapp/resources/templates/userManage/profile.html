@@ -1,0 +1,49 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link th:href="@{/resources/static/css/inputPagesStyle.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<div class="sidenav">
+    <div class="login-main-text">
+        <h2>My profile</h2>
+    </div>
+</div>
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="register-form">
+            <form th:action="@{/user/profile}" th:object="${userDto}" method="POST">
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" id="firstName" class="form-control" th:field="*{firstName}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{firstName}"></span>
+                </div>
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" id="lastName" class="form-control" th:field="*{lastName}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{lastName}"></span>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" id="email" class="form-control" th:field="*{email}">
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{email}"></span>
+                </div>
+                <div class="form-group">
+                    <label>Email confirm</label>
+                    <input type="text" id="emailConfirm" class="form-control" th:field="*{emailConfirm}" >
+                    <span class="error" th:if="${#fields.hasErrors()}" th:errors="*{emailConfirm}"></span>
+                </div>
+                <button type="submit" class="btn btn-black">Save</button>
+                <button type="reset" class="btn btn-black">Discard changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

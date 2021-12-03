@@ -29,6 +29,15 @@ public class UserService {
         userDao.save(user);
     }
 
+    public void update(User user) {
+        userDao.update(user);
+    }
+
+    public void updatePassword(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDao.update(user);
+    }
+
     public Optional<User> findUserByEmail(String email) {
         return userDao
                 .getUserByEmail(email);
