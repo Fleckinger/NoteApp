@@ -26,6 +26,10 @@
     .register-form{
         margin-top: 10%;
     }
+
+    .input-form{
+        margin-top: 10%;
+    }
 }
 
 @media screen and (min-width: 768px){
