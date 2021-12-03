@@ -27,20 +27,20 @@ public class NotesController {
     }
 
     @GetMapping("/new")
-    public String newNoteForm(Model model) {
+    public String newNote(Model model) {
         model.addAttribute("note", new Note());
         return "noteManage/newNote";
     }
 
     @PostMapping("/new")
-    public String newNoteSubmit(Note note) {
+    public String saveNote(Note note) {
         note.setUserId(userService.getCurrentUser().getId());
         noteService.save(note);
         return "redirect:/note/all";
     }
 
     @GetMapping("/edit/{id}")
-    public String editNoteForm(@PathVariable long id, Model model) {
+    public String editNote(@PathVariable long id, Model model) {
         if (!userHasAccessToNote(id)) {
             return "errors/notFound";
         }
@@ -49,11 +49,10 @@ public class NotesController {
     }
 
     @PostMapping("/edit")
-    public String editNoteSubmit(Note note) {
-        if (!userHasAccessToNote(note.getId())) {
+    public String updateNote(Note note) {
+        if (!userHasAccessToNote(note.getId()) || note.getId() == 0) {
             return "errors/notFound";
         }
-
         note.setUserId(userService.getCurrentUser().getId());
         noteService.update(note);
         return "redirect:/note/all";
@@ -64,7 +63,6 @@ public class NotesController {
         if (!userHasAccessToNote(id)) {
             return "errors/notFound";
         }
-
         String redirectPath = "redirect:/note/all";
         if (noteService.get(id).getStatus().equals(NoteStatus.ARCHIVED)) {
             redirectPath = "redirect:/note/archived";
@@ -95,28 +93,19 @@ public class NotesController {
     @GetMapping("/all")
     public String allNotes(Model model) {
         List<Note> allNotes = noteService.getAllAvailable(userService.getCurrentUserId());
-        if (allNotes.isEmpty()) {
-            return "noteManage/youHaveNoNotes"; //TODO а может проверять пустоту массива уже таймлифом? и если он пуст, просто выводить надпись
-        }
-
         model.addAttribute("allNotes", allNotes);
-        model.addAttribute("username", userService.getCurrentUser().getFirstName()
-                + " " + userService.getCurrentUser().getLastName());
         return "noteManage/allAvailableNotes";
     }
 
     @GetMapping("/archived")
     public String allArchivedNotes(Model model) {
         List<Note> allArchivedNotes = noteService.getAllArchived(userService.getCurrentUserId());
-        if (allArchivedNotes.isEmpty()) {
-            return "noteManage/youHaveNoArchivedNotes"; //TODO а может проверять пустоту массива уже таймлифом? и если он пуст, просто выводить надпись
-        }
         model.addAttribute("allArchivedNotes", allArchivedNotes);
         return "noteManage/allArchivedNotes";
     }
 
     @GetMapping("/search")
-    public String searchNote(@RequestParam(name = "keyword") String keyword, Model model) {
+    public String findNotes(@RequestParam(name = "keyword") String keyword, Model model) {
         if (keyword.isBlank()) {
             return "redirect:/note/all";
         }
