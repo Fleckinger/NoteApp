@@ -1,0 +1,12 @@
+body {
+    background: #232321;
+    color: white;
+}
+h1 {
+    color: #fff;
+    padding: 10px 0;
+}
+
+.btn.btn-round {
+    border-radius: 10px;
+}
