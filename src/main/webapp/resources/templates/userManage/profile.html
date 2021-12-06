@@ -6,18 +6,24 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <link th:href="@{/resources/static/css/inputPagesStyle.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/resources/static/css/entryPageStyle.css}" rel="stylesheet" type="text/css">
+    <style>
+        .header {
+            z-index: 999999;
+        }
+    </style>
 </head>
 
 <body>
-<div class="sidenav">
-    <div class="login-main-text">
+<div class="header" style="z-index: 1" th:replace="~{/fragments/navbar :: navbar}"></div>
+<div style="z-index: -1" class="sidenav">
+    <div class="main-text">
         <h2>My profile</h2>
     </div>
 </div>
 <div class="main">
     <div class="col-md-6 col-sm-12">
-        <div class="register-form">
+        <div class="input-form">
             <form th:action="@{/user/profile}" th:object="${userDto}" method="POST">
                 <div class="form-group">
                     <label>First name</label>
