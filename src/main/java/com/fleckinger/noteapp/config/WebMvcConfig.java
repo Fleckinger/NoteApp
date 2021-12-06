@@ -15,7 +15,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages =  "com.fleckinger.noteapp")
+@ComponentScan(basePackages = "com.fleckinger.noteapp")
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
@@ -41,10 +41,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Bean
     public SpringResourceTemplateResolver templateResolver() {
-        SpringResourceTemplateResolver  templateResolver = new SpringResourceTemplateResolver();
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("resources/templates/");
         templateResolver.setSuffix(".html");
+        templateResolver.setCacheable(false); //TODO включить кеширование после готовности всех страниц
         return templateResolver;
     }
 
