@@ -34,14 +34,13 @@ public class UserController {
     public String profile(Model model) {
         UserDto dto = UserConverter.entityToDto(userService.getCurrentUser());
         dto.setEmailConfirm(userService.getCurrentUser().getEmail());
-
+        dto.setPassword("");
         model.addAttribute("userDto", dto);
         return "userManage/profile";
     }
 
     @PostMapping("/profile")
     public String updateProfile(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
-        //TODO как-то убрать зашифрованный пароль из формы
         if (!userDto.getEmail().equals(userDto.getEmailConfirm()) || userDto.getEmail().isBlank()) {
 
             bindingResult.rejectValue("emailConfirm", "Emails don't match", "Emails don't match");
