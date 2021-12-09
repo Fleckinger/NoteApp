@@ -2,6 +2,7 @@ package com.fleckinger.noteapp.service.user;
 
 import com.fleckinger.noteapp.dao.UserDao;
 import com.fleckinger.noteapp.entity.user.User;
+import com.fleckinger.noteapp.security.Role;
 import com.fleckinger.noteapp.security.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,16 +26,11 @@ public class UserService {
 
     public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_USER");
+        user.setRole(Role.ROLE_USER);
         userDao.save(user);
     }
 
     public void update(User user) {
-        userDao.update(user);
-    }
-
-    public void updatePassword(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);
     }
 

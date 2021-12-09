@@ -1,16 +1,17 @@
 package com.fleckinger.noteapp.entity.user;
 
+import com.fleckinger.noteapp.security.Role;
+
 import java.util.Objects;
 
 
 public class User {
-    //TODO попробовать сделать роли ENUM сделать роль юзера и админа
     private long id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private String role;
+    private Role role;
 
 
     public long getId() {
@@ -53,11 +54,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

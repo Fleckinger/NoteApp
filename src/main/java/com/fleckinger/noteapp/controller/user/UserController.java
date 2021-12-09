@@ -3,6 +3,7 @@ package com.fleckinger.noteapp.controller.user;
 import com.fleckinger.noteapp.dto.user.UserConverter;
 import com.fleckinger.noteapp.dto.user.UserDto;
 import com.fleckinger.noteapp.entity.user.User;
+import com.fleckinger.noteapp.security.Role;
 import com.fleckinger.noteapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,7 +41,7 @@ public class UserController {
 
     @PostMapping("/profile")
     public String updateProfile(@ModelAttribute @Valid UserDto userDto, BindingResult bindingResult) {
-
+        //TODO как-то убрать зашифрованный пароль из формы
         if (!userDto.getEmail().equals(userDto.getEmailConfirm()) || userDto.getEmail().isBlank()) {
 
             bindingResult.rejectValue("emailConfirm", "Emails don't match", "Emails don't match");
@@ -57,7 +58,7 @@ public class UserController {
         } else {
             User user = UserConverter.dtoToEntity(userDto);
             user.setId(userService.getCurrentUser().getId());
-            user.setRole("ROLE_USER"); //TODO поменять роли на enum
+            user.setRole(Role.ROLE_USER);
             if (userDto.getPassword().isEmpty()) {
                 user.setPassword(userService.getCurrentUser().getPassword());
             } else {

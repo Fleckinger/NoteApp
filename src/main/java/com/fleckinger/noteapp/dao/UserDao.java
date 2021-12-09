@@ -1,6 +1,7 @@
 package com.fleckinger.noteapp.dao;
 
 import com.fleckinger.noteapp.entity.user.User;
+import com.fleckinger.noteapp.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +30,7 @@ public class UserDao implements Dao<User> {
                     user.setLastName(resultSet.getString("last_name"));
                     user.setEmail(resultSet.getString("email"));
                     user.setPassword(resultSet.getString("password"));
-                    user.setRole(resultSet.getString("role"));
+                    user.setRole(Role.valueOf(resultSet.getString("role")));
                 }
             }
         } catch (SQLException sqlException) {
@@ -52,7 +53,7 @@ public class UserDao implements Dao<User> {
                 user.setLastName(resultSet.getString("last_name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
-                user.setRole(resultSet.getString("role"));
+                user.setRole(Role.valueOf(resultSet.getString("role")));
 
                 users.add(user);
             }
@@ -72,7 +73,7 @@ public class UserDao implements Dao<User> {
             statement.setString(3, user.getLastName());
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getPassword());
-            statement.setString(6, user.getRole());
+            statement.setString(6, user.getRole().name());
 
             statement.executeUpdate();
 
@@ -93,7 +94,7 @@ public class UserDao implements Dao<User> {
             statement.setString(3, user.getLastName());
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getPassword());
-            statement.setString(6, user.getRole());
+            statement.setString(6, user.getRole().name());
             statement.setLong(7, user.getId());
 
             statement.executeUpdate();
@@ -126,7 +127,7 @@ public class UserDao implements Dao<User> {
                     user.setLastName(resultSet.getString("last_name"));
                     user.setEmail(resultSet.getString("email"));
                     user.setPassword(resultSet.getString("password"));
-                    user.setRole(resultSet.getString("role"));
+                    user.setRole(Role.valueOf(resultSet.getString("role")));
                 }
             }
         } catch (SQLException sqlException) {

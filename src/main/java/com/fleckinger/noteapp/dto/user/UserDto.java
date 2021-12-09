@@ -1,5 +1,7 @@
 package com.fleckinger.noteapp.dto.user;
 
+import com.fleckinger.noteapp.security.Role;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -21,7 +23,7 @@ public class UserDto {
     private String password;
     @NotBlank(message = "Confirm the password")
     private String passwordConfirm;
-    private String role;
+    private Role role;
 
 
     public long getId() {
@@ -80,11 +82,11 @@ public class UserDto {
         this.passwordConfirm = passwordConfirm;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
