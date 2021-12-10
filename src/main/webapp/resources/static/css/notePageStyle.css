@@ -11,10 +11,12 @@ h1 {
     border: none;
     margin: 10px;
     padding: 5px;
+
 }
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4);
 }
+
 .card a {
     color: initial;
 }
@@ -25,12 +27,11 @@ h1 {
     margin: 0 10px;
 }
 
-
-.editNoteButton  {
+.editNoteButton {
     float: left;
 }
 
-.archiveNoteButton  {
+.archiveNoteButton {
     float: left;
 }
 
@@ -40,4 +41,8 @@ form.deleteNoteButton {
 
 .btn.btn-round {
     border-radius: 10px;
+}
+
+.btn.btn-link {
+    color: black;
 }
