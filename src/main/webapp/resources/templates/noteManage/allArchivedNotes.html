@@ -3,39 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>All notes</title>
+    <!--Bootstrap-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+    <!--Masonry-->
+    <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+            integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
+            async></script>
+    <!--CSS style-->
     <link th:href="@{/resources/static/css/notePageStyle.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 <div th:replace="~{/fragments/navbar :: navbar}"></div>
-<div class="container">
-    <div class="card-columns">
-        <div th:each="note : ${allArchivedNotes}" class="card">
-            <img class="card-img-top"
-                 src="https://images.unsplash.com/photo-1535025639604-9a804c092faa?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6cb0ceb620f241feb2f859e273634393&auto=format&fit=crop&w=500&q=80"
-                 alt="Card image cap">
+
+<div class="row" data-masonry='{"percentPosition": true }'>
+    <div th:each="note, iterStat : ${allArchivedNotes}" class="col-sm-6 col-lg-4 mb-4">
+        <div class="card">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg"
+                 role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                <title>Placeholder</title>
+                <rect width="100%" height="100%" fill="#868e96"/>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+            </svg>
+
             <div class="card-body">
-                <h5 class="card-title" th:text="${note.getTitle()}"></h5>
-                <!--TODO сделать заголовок кликабельным?-->
+
+                <button type="button" class="btn btn-link" data-bs-toggle="modal"
+                        th:data-bs-target="|#noteModal${iterStat.index}|">
+                    <h5 class="card-title" th:text="${note.getTitle()}"></h5>
+                </button>
+
                 <p class="card-text" th:text="${note.getContent()}"></p>
-                <p class="card-text"><small class="text-muted">
+                <p class="card-text"><small class="text-muted"> Last edited:
                     <i class="fas fa-calendar-alt"
-                       th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"></i></small>
+                       th:text="${#temporals.format(note.getUploadDate(), 'dd.MM.yyyy HH:mm')}"></i>
+                </small>
                 </p>
-                <div>
-                    <form class="editNoteButton" th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
-                        <button class="btn btn-white btn-round" type="submit">edit</button>
-                    </form>
-                    <form class="archiveNoteButton" th:action="@{/note/unarchive/{id}(id=${note.getId()})}"
-                          method="POST">
-                        <button class="btn btn-white btn-round" type="submit">unarchive</button>
-                    </form>
-                    <form class="deleteNoteButton" th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
-                        <button class="btn btn-white btn-round" type="submit">delete</button>
-                    </form>
-                </div>
+                <form class="editNoteButton" th:action="@{/note/edit/{id}(id=${note.getId()})}" method="GET">
+                    <button class="btn btn-white btn-round" type="submit">edit</button>
+                </form>
+                <form class="archiveNoteButton" th:action="@{/note/unarchive/{id}(id=${note.getId()})}" method="POST">
+                    <button class="btn btn-white btn-round" type="submit">unarchive</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" th:id="|noteModal${iterStat.index}|" tabindex="-1"
+                         aria-labelledby="ModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" th:text="${note.getTitle()}"></h5>
+                                </div>
+                                <div class="modal-body" th:text="${note.getContent()}"></div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-segcondary" data-bs-dismiss="modal">Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form class="deleteNoteButton" th:action="@{/note/delete/{id}(id = ${note.getId()})}" method="POST">
+                    <button class="btn btn-white btn-round" type="submit">delete</button>
+                </form>
             </div>
         </div>
     </div>
