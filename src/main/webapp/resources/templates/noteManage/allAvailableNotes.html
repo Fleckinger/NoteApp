@@ -17,6 +17,7 @@
     <link th:href="@{/resources/static/css/notePageStyle.css}" rel="stylesheet" type="text/css">
 
 </head>
+<body>
 <div th:replace="~{/fragments/navbar :: navbar}"></div>
 
 <div class="row" data-masonry='{"percentPosition": true }'>
@@ -32,7 +33,7 @@
             <div class="card-body">
 
                 <button type="button" class="btn btn-link" data-bs-toggle="modal"
-                        th:data-bs-target="|#noteModal${iterStat.index}|" >
+                        th:data-bs-target="|#noteModal${iterStat.index}|">
                     <h5 class="card-title" th:text="${note.getTitle()}"></h5>
                 </button>
 
