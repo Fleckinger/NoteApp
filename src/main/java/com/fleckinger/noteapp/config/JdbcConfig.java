@@ -9,6 +9,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * The class represents database connection configuration.
+ */
+
 @Configuration
 public class JdbcConfig {
 
@@ -22,9 +26,8 @@ public class JdbcConfig {
 
     /**
      * Read username, password and path from dbConfig.properties and return Connection to database
-     * dbConfig.properties placed in WEB-INF folder in WAR
-     * @return Connection
-     * @throws IOException
+     * dbConfig.properties placed in WEB-INF folder in war
+     * @return Connection to database
      */
     @Bean
     public Connection getConnection() throws IOException {
