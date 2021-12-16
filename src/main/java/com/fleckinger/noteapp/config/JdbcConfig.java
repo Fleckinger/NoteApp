@@ -10,19 +10,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * The class represents database connection configuration.
+ * The class represents database connect configuration.
  */
 
 @Configuration
 public class JdbcConfig {
-
-    static {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Read username, password and path from dbConfig.properties and return Connection to database
