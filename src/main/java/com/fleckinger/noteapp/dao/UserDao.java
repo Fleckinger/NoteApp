@@ -12,9 +12,9 @@ import java.util.Optional;
 
 @Component
 public class UserDao implements Dao<User> {
+
     private Connection connection;
-
-
+    
     @Override
     public Optional<User> get(Long id) {
         User user = null;
@@ -48,6 +48,7 @@ public class UserDao implements Dao<User> {
         ) {
             while (resultSet.next()) {
                 User user = new User();
+
                 user.setId(resultSet.getLong("id"));
                 user.setFirstName(resultSet.getString("first_name"));
                 user.setLastName(resultSet.getString("last_name"));
