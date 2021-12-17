@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of core DAO interface, specific to Note entity.
+ */
 @Component
 public class UserDao implements Dao<User> {
 
     private Connection connection;
-    
+
     @Override
     public Optional<User> get(Long id) {
         User user = null;
