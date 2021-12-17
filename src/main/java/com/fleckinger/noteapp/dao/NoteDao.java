@@ -1,7 +1,5 @@
 package com.fleckinger.noteapp.dao;
 
-import com.fleckinger.noteapp.config.JdbcConfig;
-import com.fleckinger.noteapp.dao.Dao;
 import com.fleckinger.noteapp.entity.note.Note;
 import com.fleckinger.noteapp.entity.note.NoteStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of core DAO interface, specific to User entity.
+ */
 @Component
 public class NoteDao implements Dao<Note> {
     
@@ -28,7 +29,7 @@ public class NoteDao implements Dao<Note> {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     note = new Note();
-                    fillNote(note, resultSet);
+                    convertResultSetToNote(note, resultSet);
                 }
             }
         } catch (SQLException sqlException) {
@@ -47,7 +48,7 @@ public class NoteDao implements Dao<Note> {
         ) {
             while (resultSet.next()) {
                 Note note = new Note();
-                fillNote(note, resultSet);
+                convertResultSetToNote(note, resultSet);
                 notes.add(note);
             }
 
@@ -61,7 +62,7 @@ public class NoteDao implements Dao<Note> {
     public void save(Note note) {
         try (PreparedStatement statement = connection.prepareStatement("INSERT INTO note VALUES (?, ?, ?, ?, ?, ?)")
         ) {
-            fillStatement(note, statement);
+            convertNoteToStatement(note, statement);
             statement.executeUpdate();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -75,7 +76,7 @@ public class NoteDao implements Dao<Note> {
                              "SET id = ?, status = ?, title = ?, content = ?, upload_date = ?, user_id = ? " +
                              "WHERE id = ?")
         ) {
-            fillStatement(note, statement);
+            convertNoteToStatement(note, statement);
             statement.setLong(7, note.getId());
 
             statement.executeUpdate();
@@ -106,7 +107,7 @@ public class NoteDao implements Dao<Note> {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Note note = new Note();
-                    fillNote(note, resultSet);
+                    convertResultSetToNote(note, resultSet);
                     notes.add(note);
                 }
             }
@@ -128,7 +129,7 @@ public class NoteDao implements Dao<Note> {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     Note note = new Note();
-                    fillNote(note, resultSet);
+                    convertResultSetToNote(note, resultSet);
                     notes.add(note);
                 }
             }
@@ -138,7 +139,7 @@ public class NoteDao implements Dao<Note> {
         return notes;
     }
 
-    private void fillNote(Note note, ResultSet resultSet) throws SQLException {
+    private void convertResultSetToNote(Note note, ResultSet resultSet) throws SQLException {
         note.setId(resultSet.getLong("id"));
         note.setStatus(NoteStatus.valueOf(resultSet.getString("status")));
         note.setTitle(resultSet.getString("title"));
@@ -147,7 +148,7 @@ public class NoteDao implements Dao<Note> {
         note.setUserId(resultSet.getLong("user_id"));
     }
 
-    private void fillStatement(Note note, PreparedStatement statement) throws SQLException {
+    private void convertNoteToStatement(Note note, PreparedStatement statement) throws SQLException {
         statement.setLong(1, note.getId());
         statement.setString(2, note.getStatus().toString());
         statement.setString(3, note.getTitle());
