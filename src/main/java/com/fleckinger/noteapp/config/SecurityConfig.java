@@ -16,13 +16,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+/**
+ * The class represents java based security configuration, such as login, access to certain page etc.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
     private UserDetailsService userDetailsService;
 
+    /**
+     * Configuration web based security for specific http requests.
+     * Sets character encoding to UTF-8, add all permission for main and registration pages, set login page
+     * and page to redirect after success login.
+     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
         CharacterEncodingFilter charFilter = new CharacterEncodingFilter();
@@ -31,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(charFilter, CsrfFilter.class);
 
         http
-                .csrf().disable()
+                .csrf().disable()//TODO включить
                 .authorizeRequests()
                 .mvcMatchers("/", "/registration").permitAll()
                 .anyRequest()
