@@ -45,7 +45,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         templateResolver.setApplicationContext(applicationContext);
         templateResolver.setPrefix("resources/templates/");
         templateResolver.setSuffix(".html");
-        templateResolver.setCacheable(false); //TODO включить кеширование после готовности всех страниц
+        templateResolver.setCacheable(true);
         return templateResolver;
     }
 
@@ -71,8 +71,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public Java8TimeDialect java8TimeDialect() {
         return new Java8TimeDialect();
     }
-
-
 }
 
 
