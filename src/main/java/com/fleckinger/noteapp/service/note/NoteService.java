@@ -15,7 +15,6 @@ public class NoteService {
 
     private final NoteDao noteDao;
 
-
     @Autowired
     public NoteService(NoteDao noteDao) {
         this.noteDao = noteDao;
@@ -31,7 +30,6 @@ public class NoteService {
     }
 
     public List<Note> getAllAvailable(long userId) {
-
         return noteDao.getAllByUserIdAndStatus(userId, NoteStatus.AVAILABLE);
     }
 
