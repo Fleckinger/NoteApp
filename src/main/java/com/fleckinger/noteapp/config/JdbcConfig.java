@@ -1,8 +1,12 @@
 package com.fleckinger.noteapp.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.servlet.support.JstlUtils;
 
+import javax.servlet.ServletConfig;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,29 +18,29 @@ import java.util.Properties;
  */
 
 @Configuration
+@PropertySource("WEB-INF/dbConfig.properties")
 public class JdbcConfig {
+    @Value("${db.url}")
+    private String dbUrl;
+    @Value("${db.user}")
+    private String dbUser;
+    @Value("${db.password}")
+    private String dbPassword;
 
     /**
-     * Read username, password and path from dbConfig.properties and return Connection to database
-     * dbConfig.properties placed in WEB-INF folder in war
-     * @return Connection to database
+     * @return Connection to the database
      */
     @Bean
-    public Connection getConnection() throws IOException {
-        Properties properties = new Properties();
+    public Connection getConnection() {
+
         Connection connection = null;
 
-        try (InputStream input = new FileInputStream(
-                this.getClass().getResource("../../../../../dbConfig.properties").getPath())) {
-            properties.load(input);
-            connection = DriverManager.getConnection(
-                    properties.getProperty("db.url"),
-                    properties.getProperty("db.user"),
-                    properties.getProperty("db.password"));
-
+        try {
+            connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return connection;
     }
 }
