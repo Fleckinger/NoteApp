@@ -4,6 +4,8 @@ plugins {
     id 'application'
 }
 
+sourceCompatibility = '15'
+
 repositories {
     mavenCentral()
 }
@@ -62,7 +64,8 @@ dependencies {
 
                                         //***Test***//
 
-    implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter:5.8.2'
+    testRuntimeOnly 'com.h2database:h2:2.0.202'
 }
 
 war {
