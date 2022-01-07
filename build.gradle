@@ -3,10 +3,10 @@ plugins {
     id 'war'
     id 'application'
 }
-java {
+
     sourceCompatibility = 15
     targetCompatibility = 15
-}
+
 
 
 repositories {
