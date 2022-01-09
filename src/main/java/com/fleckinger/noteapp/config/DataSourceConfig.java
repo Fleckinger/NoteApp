@@ -25,6 +25,7 @@ public class DataSourceConfig {
         poolProperties.setPassword(dbPassword);
         poolProperties.setDriverClassName("com.mysql.jdbc.Driver");
         poolProperties.setValidationQuery("SELECT 1");
+        poolProperties.setTestOnBorrow(true);
         poolProperties.setTestOnReturn(true);
         poolProperties.setValidationInterval(30000);
         poolProperties.setTimeBetweenEvictionRunsMillis(30000);
