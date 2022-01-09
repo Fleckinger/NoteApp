@@ -2,6 +2,7 @@ package com.fleckinger.noteapp.dao;
 
 import com.fleckinger.noteapp.entity.note.Note;
 import com.fleckinger.noteapp.entity.note.NoteStatus;
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,14 +17,23 @@ import java.util.Optional;
  */
 @Component
 public class NoteDao implements Dao<Note> {
-    
-    private Connection connection;
-    
+
+    private DataSource dataSource;
+
+    public NoteDao() {
+    }
+
+    @Autowired
+    public NoteDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
     @Override
     public Optional<Note> get(Long id) {
         Note note = null;
 
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM note WHERE id = ?")
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM note WHERE id = ?")
         ) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -42,9 +52,9 @@ public class NoteDao implements Dao<Note> {
     public List<Note> getAll() {
         List<Note> notes = new ArrayList<>();
 
-        try (
-                PreparedStatement statement = connection.prepareStatement("SELECT * FROM note");
-                ResultSet resultSet = statement.executeQuery()
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM note");
+             ResultSet resultSet = statement.executeQuery()
         ) {
             while (resultSet.next()) {
                 Note note = new Note();
@@ -60,7 +70,8 @@ public class NoteDao implements Dao<Note> {
 
     @Override
     public void save(Note note) {
-        try (PreparedStatement statement = connection.prepareStatement("INSERT INTO note VALUES (?, ?, ?, ?, ?, ?)")
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO note VALUES (?, ?, ?, ?, ?, ?)")
         ) {
             convertNoteToStatement(note, statement);
             statement.executeUpdate();
@@ -71,7 +82,8 @@ public class NoteDao implements Dao<Note> {
 
     @Override
     public void update(Note note) {
-        try (PreparedStatement statement = connection.prepareStatement(
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
                      "UPDATE note " +
                              "SET id = ?, status = ?, title = ?, content = ?, upload_date = ?, user_id = ? " +
                              "WHERE id = ?")
@@ -87,7 +99,8 @@ public class NoteDao implements Dao<Note> {
 
     @Override
     public void delete(Long id) {
-        try (PreparedStatement statement = connection.prepareStatement("DELETE FROM note WHERE id = ?")
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM note WHERE id = ?")
         ) {
             statement.setLong(1, id);
             statement.executeUpdate();
@@ -99,7 +112,8 @@ public class NoteDao implements Dao<Note> {
 
     public List<Note> search(String keywords) {
         List<Note> notes = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(
                      "SELECT * FROM note WHERE title LIKE ? OR content LIKE ?")) {
 
             statement.setString(1, "%" + keywords + "%");
@@ -121,8 +135,9 @@ public class NoteDao implements Dao<Note> {
     public List<Note> getAllByUserIdAndStatus(long id, NoteStatus status) {
         List<Note> notes = new ArrayList<>();
 
-        try (PreparedStatement statement = connection.prepareStatement
-                        ("SELECT * FROM note WHERE user_id = ? AND status = ?")
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement
+                     ("SELECT * FROM note WHERE user_id = ? AND status = ?")
         ) {
             statement.setLong(1, id);
             statement.setString(2, status.toString());
@@ -155,10 +170,5 @@ public class NoteDao implements Dao<Note> {
         statement.setString(4, note.getContent());
         statement.setObject(5, note.getUploadDate());
         statement.setLong(6, note.getUserId());
-    }
-
-    @Autowired
-    public void setConnection(Connection connection) {
-        this.connection = connection;
     }
 }
