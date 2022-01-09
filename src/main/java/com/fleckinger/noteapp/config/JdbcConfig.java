@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Scope;
 
 
 import java.sql.Connection;
@@ -28,7 +29,9 @@ public class JdbcConfig {
     /**
      * @return Connection to the database
      */
+
     @Bean
+    @Scope("prototype")
     public Connection getConnection() {
 
         Connection connection = null;

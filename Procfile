@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/NoteApp.war
+web: java -jar build/libs/NoteApp.war
