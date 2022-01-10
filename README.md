@@ -21,4 +21,4 @@ This app can do:
 - password: test
 
 ## Screenshots
-<img alt="Noteapp main page" src="https://github.com/Fleckinger/NoteApp" width="100" height="100">
+<img alt="Noteapp main page" src="https://github.com/Fleckinger/NoteApp/blob/pureMVC/docs/Main.jpg" width="100" height="100">
