@@ -1,6 +1,10 @@
 # NoteApp
 This is a web app for manage personal notes on the web.
 
+You may check that application by opening the link:
+https://noteapp-project.herokuapp.com/
+
+
 
 This app can do:
 - Allows the user to create personal account, login to it and save his personal notes.
@@ -9,10 +13,10 @@ This app can do:
 - Update personal credentials in "Profile" tab.
 
 ## Technology used
-- JDK 15
+- Java
 - Spring: Core, MVC, Security.
 - JDBC, MySQL.
-- Thymeleaf, Bootstrap.
+- Thymeleaf, Bootstrap, Masonry layout library.
 - Tomcat 9 web server
 - Gradle
 
@@ -21,4 +25,13 @@ This app can do:
 - password: test
 
 ## Screenshots
-<img alt="Noteapp main page" src="https://github.com/Fleckinger/NoteApp/blob/pureMVC/docs/Main.jpg" width="100" height="100">
+- Login page
+![](docs/Main.jpg)
+- Registration page
+![](docs/Registration.jpg)
+- All notes
+![](docs/AllNotes.jpg)
+- New note
+![](docs/NewNoteForm.jpg)
+- User profile
+![](docs/UserProfile.jpg)
